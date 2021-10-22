@@ -11,7 +11,7 @@ app.use(express.json());
 app.use("/api", index);
 
 //define port on which server will run
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5001;
 
 //define start async function to start server
 const start = async () => {

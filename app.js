@@ -4,11 +4,36 @@ require("dotenv").config();
 const app = express();
 
 const index = require("./routes/index");
+const report = require("./routes/report");
+const template = require("./routes/template");
+const group = require("./routes/group");
+const contact = require("./routes/contact");
 
 //use this the body-parser feature from express
 app.use(express.json());
 
-app.use("/api", index);
+app.use("/api/", index, report);
+app.use("/api/template", template);
+app.use("/api/group", group);
+app.use("/api/contact", contact);
+
+// handle not found errors
+app.use((req, res, next) => {
+  const error = new Error("Not found");
+  error.status = 404;
+  next(error);
+});
+
+// Error handler
+app.use((error, req, res, next) => {
+  res.status(error.status || 500);
+  res.json({
+    error: {
+      status: error.status || 500,
+      message: error.message,
+    },
+  });
+});
 
 //define port on which server will run
 const port = process.env.PORT || 5001;

@@ -1,44 +1,84 @@
-const axios = require("axios");
 const constants = require("../config");
-const { axiosGet } = require("../service/service");
+const makeRequest = require("../service/serve");
+const { mnotifyGroupBaseUrl } = require("../config");
 
+// get all groups
 const getAllGroups = async (req, res) => {
-  const templateUrl =
-    constants.mnotifyGroupBaseUrl.BASE_URL + "?key=" + constants.SECRET_KEY;
+  //  url
+  const url = mnotifyGroupBaseUrl.BASE_URL + "?key=" + constants.SECRET_KEY;
 
-  await axios({ method: "get", url: templateUrl })
-    .then((result) => {
-      return res.send(JSON.stringify(result.data));
-    })
-    .catch((err) => {
-      console.log(err);
-      return res.send(err);
-    });
-  // await axiosGet().then((response) => {
-  //   console.log(response);
-  // });
+  const response = await makeRequest("get", {}, url);
+
+  return res.json(response.data);
 };
 
-const getGroup = async (req, res) => {
-  const { id } = req.params;
-  const templateUrl =
-    constants.mnotifyGroupBaseUrl.BASE_URL +
+// get individual groups
+const getGroupID = async (req, res) => {
+  //  url
+  const url =
+    mnotifyGroupBaseUrl.BASE_URL +
     "/" +
-    id +
+    req.params.id +
     "?key=" +
     constants.SECRET_KEY;
 
-  await axios({ method: "get", url: templateUrl })
-    .then((result) => {
-      return res.send(JSON.stringify(result.data));
-    })
-    .catch((err) => {
-      console.log(err);
-      return res.send(err);
-    });
+  const response = await makeRequest("get", {}, url);
+
+  return res.json(response.data);
+};
+
+// create new group
+const createGroup = async (req, res, next) => {
+  //  url
+  const url = mnotifyGroupBaseUrl.BASE_URL + "?key=" + constants.SECRET_KEY;
+
+  // check if the request body is not empty
+  if (Object.keys(req.body).length === 0) {
+    return next(new Error("All Fields are required"));
+  }
+
+  const response = await makeRequest("post", req.body, url);
+
+  return res.json(response.data);
+};
+
+// update individual groups
+const updateGroupID = async (req, res, next) => {
+  const url =
+    mnotifyGroupBaseUrl.BASE_URL +
+    "/" +
+    req.params.id +
+    "?key=" +
+    constants.SECRET_KEY;
+
+  // check if the request body is not empty
+  if (Object.keys(req.body).length === 0) {
+    return next(new Error("All Fields are required"));
+  }
+
+  const response = await makeRequest("put", req.body, url);
+
+  return res.json(response.data);
+};
+
+// delete group
+const deleteGroup = async (req, res, next) => {
+  const url =
+    mnotifyGroupBaseUrl.BASE_URL +
+    "/" +
+    req.params.id +
+    "?key=" +
+    constants.SECRET_KEY;
+
+  const response = await makeRequest("delete", {}, url);
+
+  return res.json(response.data);
 };
 
 module.exports = {
   getAllGroups,
-  getGroup,
+  getGroupID,
+  createGroup,
+  updateGroupID,
+  deleteGroup,
 };

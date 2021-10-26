@@ -1,60 +1,86 @@
-const axios = require("axios");
 const constants = require("../config");
 
-const getAllMessageTemplates = async (req, res) => {
-  const templateUrl =
-    constants.mnotifyTemplateBaseUrl.BASE_URL + "?key=" + constants.SECRET_KEY;
+const makeRequest = require("../service/serve");
+const { mnotifyTemplateBaseUrl } = require("../config");
 
-  await axios({ method: "get", url: templateUrl })
-    .then((result) => {
-      return res.send(JSON.stringify(result.data));
-    })
-    .catch((err) => {
-      console.log(err);
-      return res.send(err);
-    });
+// get all message templates
+const getAllMessageTemplates = async (req, res) => {
+  //  url
+  const url = mnotifyTemplateBaseUrl.BASE_URL + "?key=" + constants.SECRET_KEY;
+
+  const response = await makeRequest("get", {}, url);
+
+  return res.json(response.data);
 };
 
+// get individual message templates
 const getMessageTemplate = async (req, res) => {
-  const { id } = req.params;
-  const templateUrl =
-    constants.mnotifyTemplateBaseUrl.BASE_URL +
+  //  url
+  const url =
+    mnotifyTemplateBaseUrl.BASE_URL +
     "/" +
-    id +
+    req.params.id +
     "?key=" +
     constants.SECRET_KEY;
 
-  await axios({ method: "get", url: templateUrl })
-    .then((result) => {
-      return res.send(JSON.stringify(result.data));
-    })
-    .catch((err) => {
-      console.log(err);
-      return res.send(err);
-    });
+  const response = await makeRequest("get", {}, url);
+
+  return res.json(response.data);
 };
 
-// const createMessageTemplate = async (req, res) => {
-//   const { id } = req.params;
-//   const templateUrl =
-//     constants.mnotifyTemplateBaseUrl.BASE_URL +
-//     "/" +
-//     id +
-//     "?key=" +
-//     constants.SECRET_KEY;
+// create new message template
+const createMessageTemplate = async (req, res, next) => {
+  //  url
+  const url = mnotifyTemplateBaseUrl.BASE_URL + "?key=" + constants.SECRET_KEY;
 
-//   await axios
-//     .get(templateUrl)
-//     .then((result) => {
-//       return res.send(JSON.stringify(result.data));
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//       return res.send(err);
-//     });
-// };
+  // check if the request body is not empty
+  if (Object.keys(req.body).length === 0) {
+    return next(new Error("All Fields are required"));
+  }
+
+  const response = await makeRequest("post", req.body, url);
+
+  return res.json(response.data);
+};
+
+// update individual message templates
+const updateTemplateID = async (req, res, next) => {
+  const url =
+    constants.mnotifyTemplateBaseUrl.BASE_URL +
+    "/" +
+    req.params.id +
+    "?key=" +
+    constants.SECRET_KEY;
+
+  // check if the request body is not empty
+  if (Object.keys(req.body).length === 0) {
+    return next(new Error("All Fields are required"));
+  }
+
+  const response = await makeRequest("put", req.body, url);
+
+  return res.json(response.data);
+};
+
+// delete individual message templates
+const deleteTemplate = async (req, res, next) => {
+  //  url
+  const url =
+    mnotifyTemplateBaseUrl.BASE_URL +
+    "/" +
+    req.params.id +
+    "?key=" +
+    constants.SECRET_KEY;
+
+  const response = await makeRequest("delete", {}, url);
+
+  return res.json(response.data);
+};
 
 module.exports = {
   getAllMessageTemplates,
   getMessageTemplate,
+  createMessageTemplate,
+  updateTemplateID,
+  deleteTemplate,
 };

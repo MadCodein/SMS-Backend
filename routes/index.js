@@ -1,17 +1,17 @@
-const express = require("express");
-const router = express.Router();
+const express = require('express')
+const router = express.Router()
 
-const constants = require("../config");
-const makeRequest = require("../service/serve");
+const constants = require('../config')
+const makeRequest = require('../service/serve')
 const {
   mnotifyGroupBulkSMSBaseUrl,
   mnotifyQuickBulkSMSBaseUrl,
-  mnotifySenderIDBaseUrl,
-} = require("../config");
+  mnotifySenderIDBaseUrl
+} = require('../config')
 
-// Handle group bulk messaging
-// Send SMS to clients/contacts using contacts that you have without storing in any group first
-router.post("/sms/quick", async (req, res) => {
+//* Handle group bulk messaging
+//* Send SMS to clients/contacts using contacts that you have without storing in any group first
+router.post('/sms/quick', async (req, res) => {
   // {
   //        "recipient": ["0552541157"],
   //        "sender": "TestSystem",
@@ -20,21 +20,21 @@ router.post("/sms/quick", async (req, res) => {
 
   //  url
   const url =
-    mnotifyQuickBulkSMSBaseUrl.BASE_URL + "?key=" + constants.SECRET_KEY;
+    mnotifyQuickBulkSMSBaseUrl.BASE_URL + '?key=' + constants.SECRET_KEY
 
   // check if the request body is not empty
   if (Object.keys(req.body).length === 0) {
-    return next(new Error("All Fields are required"));
+    return next(new Error('All Fields are required'))
   }
 
-  const response = await makeRequest("post", req.body, url);
+  const response = await makeRequest('post', req.body, url)
 
-  return res.json(response.data);
-});
+  return res.json(response.data)
+})
 
 //Handle group bulk messaging
 // Send SMS to clients/contacts using groups you created earlier which has contacts in them
-router.post("/sms/group", async (req, res) => {
+router.post('/sms/group', async (req, res) => {
   //   {
   //        "group_id": ["39525"],
   //        "sender": "TestSystem",
@@ -43,21 +43,21 @@ router.post("/sms/group", async (req, res) => {
 
   //  url
   const url =
-    mnotifyGroupBulkSMSBaseUrl.BASE_URL + "?key=" + constants.SECRET_KEY;
+    mnotifyGroupBulkSMSBaseUrl.BASE_URL + '?key=' + constants.SECRET_KEY
 
   // check if the request body is not empty
   if (Object.keys(req.body).length === 0) {
-    return next(new Error("All Fields are required"));
+    return next(new Error('All Fields are required'))
   }
 
-  const response = await makeRequest("post", req.body, url);
+  const response = await makeRequest('post', req.body, url)
 
-  return res.json(response.data);
-});
+  return res.json(response.data)
+})
 
 // Register Sender ID
 // Register your sender ids to send messages
-router.post("/senderid/register", async (req, res) => {
+router.post('/senderid/register', async (req, res) => {
   //   {
   //        "group_id": ["39525"],
   //        "sender": "TestSystem",
@@ -65,16 +65,16 @@ router.post("/senderid/register", async (req, res) => {
   // }
 
   //  url
-  const url = mnotifySenderIDBaseUrl.BASE_URL + "?key=" + constants.SECRET_KEY;
+  const url = mnotifySenderIDBaseUrl.BASE_URL + '?key=' + constants.SECRET_KEY
 
   // check if the request body is not empty
   if (Object.keys(req.body).length === 0) {
-    return next(new Error("All Fields are required"));
+    return next(new Error('All Fields are required'))
   }
 
-  const response = await makeRequest("post", req.body, url);
+  const response = await makeRequest('post', req.body, url)
 
-  return res.json(response.data);
-});
+  return res.json(response.data)
+})
 
-module.exports = router;
+module.exports = router

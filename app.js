@@ -1,42 +1,44 @@
 //require all packages
-const express = require("express");
-require("dotenv").config();
-const app = express();
+const express = require('express')
+require('dotenv').config()
+const app = express()
 
-const index = require("./routes/index");
-const report = require("./routes/report");
-const template = require("./routes/template");
-const group = require("./routes/group");
-const contact = require("./routes/contact");
+//get all routes
+const index = require('./routes/index')
+const report = require('./routes/report')
+const template = require('./routes/template')
+const group = require('./routes/group')
+const contact = require('./routes/contact')
 
-//use this the body-parser feature from express
-app.use(express.json());
+//use body-parser feature from express
+app.use(express.json())
 
-app.use("/api/", index, report);
-app.use("/api/template", template);
-app.use("/api/group", group);
-app.use("/api/contact", contact);
+//set where each route should be accessed
+app.use('/api/', index, report)
+app.use('/api/template', template)
+app.use('/api/group', group)
+app.use('/api/contact', contact)
 
 // handle not found errors
 app.use((req, res, next) => {
-  const error = new Error("Not found");
-  error.status = 404;
-  next(error);
-});
+  const error = new Error('Not found')
+  error.status = 404
+  next(error)
+})
 
-// Error handler
+// main Error handler
 app.use((error, req, res, next) => {
-  res.status(error.status || 500);
+  res.status(error.status || 500)
   res.json({
     error: {
       status: error.status || 500,
-      message: error.message,
-    },
-  });
-});
+      message: error.message
+    }
+  })
+})
 
 //define port on which server will run
-const port = process.env.PORT || 5001;
+const port = process.env.PORT || 5001
 
 //define start async function to start server
 const start = async () => {
@@ -44,11 +46,11 @@ const start = async () => {
     // await connectDB(process.env.MONGO_URI);
     app.listen(port, () =>
       console.log(`Server is listening on port ${port}...`)
-    );
+    )
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
-};
+}
 
 //start server using the start() function
-start();
+start()

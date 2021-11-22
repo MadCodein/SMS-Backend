@@ -15,7 +15,7 @@ router.get('/balance/sms', async (req, res, next) => {
 
     return res.json(response.data)
   } catch (error) {
-    next(new Error(error))
+    return next(error)
   }
 })
 
@@ -32,13 +32,11 @@ router.get('/campaign/:id/:status', async (req, res, next) => {
       '?key=' +
       constants.SECRET_KEY
 
-    console.log(url)
-
     const response = await makeRequest('get', {}, url)
 
     return res.json(response.data)
   } catch (error) {
-    next(new Error(error))
+    return next(error)
   }
 })
 
@@ -53,13 +51,11 @@ router.get('/status/:id', async (req, res, next) => {
       '?key=' +
       constants.SECRET_KEY
 
-    console.log(url)
-
     const response = await makeRequest('get', {}, url)
 
     return res.json(response.data)
   } catch (error) {
-    next(new Error(error))
+    return next(error)
   }
 })
 

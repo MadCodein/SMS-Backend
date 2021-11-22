@@ -15,7 +15,6 @@ const makeRequest = async (method, data = {}, route) => {
       return response
     } catch (error) {
       throw error.response
-      // return error.response
     }
   }
 
@@ -28,7 +27,6 @@ const makeRequest = async (method, data = {}, route) => {
       return response
     } catch (error) {
       throw error.response
-      // return error.response
     }
   }
 
@@ -41,7 +39,6 @@ const makeRequest = async (method, data = {}, route) => {
       return response
     } catch (error) {
       throw error.response
-      // return error.response
     }
   }
 
@@ -54,7 +51,6 @@ const makeRequest = async (method, data = {}, route) => {
       return response
     } catch (error) {
       throw error.response
-      // return error.response
     }
   }
 }

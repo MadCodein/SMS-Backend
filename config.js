@@ -1,33 +1,23 @@
 const constants = {
   SECRET_KEY: process.env.API_KEY,
 
-  mnotifyTemplateBaseUrl: {
-    BASE_URL: 'https://api.mnotify.com/api/template'
-  },
-  mnotifyGroupBaseUrl: {
-    BASE_URL: 'https://api.mnotify.com/api/group'
-  },
-  mnotifyContactBaseUrl: {
-    BASE_URL: 'https://api.mnotify.com/api/contact'
-  },
-  mnotifyQuickBulkSMSBaseUrl: {
-    BASE_URL: 'https://api.mnotify.com/api/sms/quick'
-  },
-  mnotifyGroupBulkSMSBaseUrl: {
-    BASE_URL: 'https://api.mnotify.com/api/sms/group'
-  },
-  mnotifySenderIDBaseUrl: {
-    BASE_URL: 'https://api.mnotify.com/api/senderid/register'
-  },
-  mnotifySMSBalanceBaseUrl: {
-    BASE_URL: 'https://api.mnotify.com/api/balance/sms'
-  },
-  mnotifySMSDeliveryReportBaseUrl: {
-    BASE_URL: 'https://api.mnotify.com/api/campaign'
-  },
-  mnotifySpecificSMSDeliveryReportBaseUrl: {
-    BASE_URL: 'https://api.mnotify.com/api/status'
-  }
+  mnotifyTemplateBaseUrl: 'https://api.mnotify.com/api/template',
+
+  mnotifyGroupBaseUrl: 'https://api.mnotify.com/api/group',
+
+  mnotifyContactBaseUrl: 'https://api.mnotify.com/api/contact',
+
+  mnotifyQuickBulkSMSBaseUrl: 'https://api.mnotify.com/api/sms/quick',
+
+  mnotifyGroupBulkSMSBaseUrl: 'https://api.mnotify.com/api/sms/group',
+
+  mnotifySenderIDBaseUrl: 'https://api.mnotify.com/api/senderid/register',
+
+  mnotifySMSBalanceBaseUrl: 'https://api.mnotify.com/api/balance/sms',
+
+  mnotifySMSDeliveryReportBaseUrl: 'https://api.mnotify.com/api/campaign',
+
+  mnotifySpecificSMSDeliveryReportBaseUrl: 'https://api.mnotify.com/api/status'
 }
 
 module.exports = constants

@@ -1,10 +1,12 @@
 const axios = require('axios')
+const { on } = require('nodemon')
 
 const makeRequest = async (method, data = {}, route) => {
   const headers = {
     'Content-Type': 'application/json',
     Authorization: 'JWT fefege...'
   }
+
   // Handle GET requests
   if (method == 'GET' || method == 'get') {
     try {
@@ -12,7 +14,8 @@ const makeRequest = async (method, data = {}, route) => {
 
       return response
     } catch (error) {
-      return error.response
+      throw error.response
+      // return error.response
     }
   }
 
@@ -24,7 +27,8 @@ const makeRequest = async (method, data = {}, route) => {
       })
       return response
     } catch (error) {
-      return error.response
+      throw error.response
+      // return error.response
     }
   }
 
@@ -36,7 +40,8 @@ const makeRequest = async (method, data = {}, route) => {
       })
       return response
     } catch (error) {
-      return error.response
+      throw error.response
+      // return error.response
     }
   }
 
@@ -48,7 +53,8 @@ const makeRequest = async (method, data = {}, route) => {
       })
       return response
     } catch (error) {
-      return error.response
+      throw error.response
+      // return error.response
     }
   }
 }

@@ -3,33 +3,28 @@ const router = express.Router()
 
 const constants = require('../config')
 const makeRequest = require('../service/serve')
-const {
-  mnotifySMSBalanceBaseUrl,
-  mnotifySMSDeliveryReportBaseUrl,
-  mnotifySpecificSMSDeliveryReportBaseUrl
-} = require('../config')
 
 // get sms balance
-router.get('/balance/sms', async (req, res) => {
+router.get('/balance/sms', async (req, res, next) => {
   try {
     //  url
     const url =
-      mnotifySMSBalanceBaseUrl.BASE_URL + '?key=' + constants.SECRET_KEY
+      constants.mnotifySMSBalanceBaseUrl + '?key=' + constants.SECRET_KEY
 
     const response = await makeRequest('get', {}, url)
 
     return res.json(response.data)
   } catch (error) {
-    throw error
+    next(new Error(error))
   }
 })
 
 // sms delivery report
-router.get('/campaign/:id/:status', async (req, res) => {
+router.get('/campaign/:id/:status', async (req, res, next) => {
   try {
     //  url
     const url =
-      mnotifySMSDeliveryReportBaseUrl.BASE_URL +
+      constants.mnotifySMSDeliveryReportBaseUrl +
       '/' +
       req.params.id +
       '/' +
@@ -43,16 +38,16 @@ router.get('/campaign/:id/:status', async (req, res) => {
 
     return res.json(response.data)
   } catch (error) {
-    throw error
+    next(new Error(error))
   }
 })
 
 // Specific SMS Delivery Report
-router.get('/status/:id', async (req, res) => {
+router.get('/status/:id', async (req, res, next) => {
   try {
     //  url
     const url =
-      mnotifySpecificSMSDeliveryReportBaseUrl.BASE_URL +
+      constants.mnotifySpecificSMSDeliveryReportBaseUrl +
       '/' +
       req.params.id +
       '?key=' +
@@ -64,7 +59,7 @@ router.get('/status/:id', async (req, res) => {
 
     return res.json(response.data)
   } catch (error) {
-    throw error
+    next(new Error(error))
   }
 })
 

@@ -3,15 +3,10 @@ const router = express.Router()
 
 const constants = require('../config')
 const makeRequest = require('../service/serve')
-const {
-  mnotifyGroupBulkSMSBaseUrl,
-  mnotifyQuickBulkSMSBaseUrl,
-  mnotifySenderIDBaseUrl
-} = require('../config')
 
 //* Handle group bulk messaging
 //* Send SMS to clients/contacts using contacts that you have without storing in any group first
-router.post('/sms/quick', async (req, res) => {
+router.post('/sms/quick', async (req, res, next) => {
   // {
   //        "recipient": ["0552541157"],
   //        "sender": "TestSystem",
@@ -20,7 +15,7 @@ router.post('/sms/quick', async (req, res) => {
 
   //  url
   const url =
-    mnotifyQuickBulkSMSBaseUrl.BASE_URL + '?key=' + constants.SECRET_KEY
+    constants.mnotifyQuickBulkSMSBaseUrl + '?key=' + constants.SECRET_KEY
 
   // check if the request body is not empty
   if (Object.keys(req.body).length === 0) {
@@ -34,7 +29,7 @@ router.post('/sms/quick', async (req, res) => {
 
 //Handle group bulk messaging
 // Send SMS to clients/contacts using groups you created earlier which has contacts in them
-router.post('/sms/group', async (req, res) => {
+router.post('/sms/group', async (req, res, next) => {
   //   {
   //        "group_id": ["39525"],
   //        "sender": "TestSystem",
@@ -43,7 +38,7 @@ router.post('/sms/group', async (req, res) => {
 
   //  url
   const url =
-    mnotifyGroupBulkSMSBaseUrl.BASE_URL + '?key=' + constants.SECRET_KEY
+    constants.mnotifyGroupBulkSMSBaseUrl + '?key=' + constants.SECRET_KEY
 
   // check if the request body is not empty
   if (Object.keys(req.body).length === 0) {
@@ -57,7 +52,7 @@ router.post('/sms/group', async (req, res) => {
 
 // Register Sender ID
 // Register your sender ids to send messages
-router.post('/senderid/register', async (req, res) => {
+router.post('/senderid/register', async (req, res, next) => {
   //   {
   //        "group_id": ["39525"],
   //        "sender": "TestSystem",
@@ -65,7 +60,7 @@ router.post('/senderid/register', async (req, res) => {
   // }
 
   //  url
-  const url = mnotifySenderIDBaseUrl.BASE_URL + '?key=' + constants.SECRET_KEY
+  const url = constants.mnotifySenderIDBaseUrl + '?key=' + constants.SECRET_KEY
 
   // check if the request body is not empty
   if (Object.keys(req.body).length === 0) {
